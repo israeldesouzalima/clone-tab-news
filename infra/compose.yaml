@@ -1,0 +1,11 @@
+# mapeia todos os serviços a serem mapeados
+services:
+  # define que o serviço se chama database
+  database:
+    # consome a imagem do dokerhub, alpine pois é a versão mais leve
+    image: "postgres:18.1-alpine"
+    # define as variáveis de ambiente
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - "5432:5432"
