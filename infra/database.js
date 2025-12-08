@@ -1,6 +1,6 @@
 import { Client } from 'pg'
 
-const consulta = async (argumento) => {
+async function consulta(argumento) {
   const client = new Client({
     host: process.env.POSTGRES_HOST,
     port: process.env.POSTGRES_PORT,

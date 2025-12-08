@@ -5,6 +5,6 @@ services:
     # consome a imagem do dokerhub, alpine pois é a versão mais leve
     image: "postgres:18.1-alpine"
     env_file:
-      - ../.env
+      - ../.env.development
     ports:
       - "5432:5432"
