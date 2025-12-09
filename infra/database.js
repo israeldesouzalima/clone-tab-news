@@ -10,10 +10,15 @@ async function consulta(argumento) {
   });
   await client.connect();
 
-  const res = await client.query(argumento)
-  console.log(res.rows[0].message)
-  await client.end()
-  return res;
+  try {
+    const res = await client.query(argumento)
+    return res;
+  } catch (error) {
+    console.error(error)
+  } finally {
+    await client.end()
+  }
+
 }
 
 export default consulta;
