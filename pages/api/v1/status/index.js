@@ -1,9 +1,31 @@
-import consulta from "../../../../infra/database.js";
+import consulta from "infra/database.js";
 
 async function Status(req, res) {
-  const result = await consulta('SELECT 1+1 as sumThis;')
-  console.log(result.rows)
-  return res.status(200).json({ message: "Tudo certo por aqui!" })
+  const updatedAt = new Date().toISOString();
+
+  const databaseMaxConnectionsResult = await consulta(`SHOW max_connections`)
+  const databaseMaxConnectionsValue = parseFloat(databaseMaxConnectionsResult.rows[0].max_connections)
+
+  const databaseServerVersionResult = await consulta(`SHOW SERVER_VERSION`)
+  const databaseServerVersionValue = databaseServerVersionResult.rows[0].server_version;
+
+  const databaseName = process.env.POSTGRES_DB;
+  const databaseOpenConnectionResult = await consulta({
+    text: 'SELECT count(*)::int FROM pg_stat_activity WHERE datName = $1',
+    values: [databaseName]
+  });
+  const databaseOpenConnectionValue = databaseOpenConnectionResult.rows[0].count
+
+  return res.status(200).json({
+    update_at: updatedAt,
+    dependencies: {
+      database: {
+        version: databaseServerVersionValue,
+        max_connextions: databaseMaxConnectionsValue,
+        open_connections: databaseOpenConnectionValue
+      }
+    }
+  })
 }
 
 export default Status;
