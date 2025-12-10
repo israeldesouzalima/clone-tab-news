@@ -6,7 +6,8 @@ async function consulta(argumento) {
     port: process.env.POSTGRES_PORT,
     user: process.env.POSTGRES_USER,
     database: process.env.POSTGRES_DB,
-    password: process.env.POSTGRES_PASSWORD
+    password: process.env.POSTGRES_PASSWORD,
+    ssl: getEnviroment()
   });
   await client.connect();
 
@@ -19,6 +20,10 @@ async function consulta(argumento) {
     await client.end()
   }
 
+}
+
+function getEnviroment() {
+  return process.env.NODE_ENV === 'production' ? true: false;
 }
 
 export default consulta;
