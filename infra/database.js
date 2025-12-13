@@ -1,6 +1,11 @@
 import { Client } from 'pg'
 
+function getEnviroment() {
+  return process.env.NODE_ENV === 'production' ? true: false;
+}
+
 async function consulta(argumento) {
+
   const client = new Client({
     host: process.env.POSTGRES_HOST,
     port: process.env.POSTGRES_PORT,
@@ -22,8 +27,5 @@ async function consulta(argumento) {
 
 }
 
-function getEnviroment() {
-  return process.env.NODE_ENV === 'production' ? true: false;
-}
 
 export default consulta;

@@ -1,3 +1,11 @@
+import database from'infra/database.js'
+
+async function resetDatabase() {
+  await database('drop schema public cascade; create schema public;')
+}
+
+beforeAll(resetDatabase)
+
 test('POST /api/v1/migrations deve retornar 200', async () => {
   const response = await fetch('http://localhost:3000/api/v1/migrations', {
     method: "POST"
