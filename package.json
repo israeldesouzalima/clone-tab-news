@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Repositório dedicado a práticar e consolidar as aulas do curso.dev",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "npm run services:up && next dev",
     "services:up": "docker compose --file infra/compose.yaml up -d",
